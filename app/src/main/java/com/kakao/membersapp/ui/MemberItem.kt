@@ -1,6 +1,7 @@
 package com.kakao.membersapp.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -16,10 +17,11 @@ import com.kakao.membersapp.model.Member
 
 
 @Composable
-fun MemberItem(member: Member) {
+fun MemberItem(member: Member, onMemberItemClick: (Member) -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
+            .clickable {  onMemberItemClick(member)}
             .padding(horizontal = 16.dp, vertical = 8.dp) // space between items
             .background(
                 color = colorResource(id = R.color.member_item_back_color),
@@ -33,4 +35,6 @@ fun MemberItem(member: Member) {
         )
     }
 }
+
+
 
