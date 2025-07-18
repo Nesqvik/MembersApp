@@ -9,4 +9,5 @@ interface MemberRepositoryInterface {
     // Diese Funktion gibt eine Liste von Member-Objekten zurück und wird verwendet, um Mitglieder-Daten zu bekommen
     // (in unserem Fall wird es nichts aus dem Internet geladen, bei uns es ist eine statische, fest kodierte Liste)
     fun fetchMembersData(): List<Member>
+    fun requestMembers()
 }
