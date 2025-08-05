@@ -36,12 +36,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.kakao.membersapp.R
+import com.kakao.membersapp.interfaces.MemberViewModelContract
 import com.kakao.membersapp.model.Member
 import com.kakao.membersapp.ui.MemberItem
 import com.kakao.membersapp.viewmodels.MemberViewModel
 
 @Composable
-fun MembersScreen(memberViewModel: MemberViewModel = hiltViewModel()) {
+fun MembersScreen(memberViewModel: MemberViewModelContract = hiltViewModel<MemberViewModel>()) {
 
     // hier beobachten wir die StateFlows aus dem ViewModel (MemberViewModel)
     //by ... collectAsState() macht aus dem Flow einen beobachtbaren Compose-Wert, der UI automatisch aktualisiert
@@ -120,7 +121,7 @@ fun MembersScreen(memberViewModel: MemberViewModel = hiltViewModel()) {
 // hier ist eine eigene Composable Funktion, z.b um Fragen zu stellen
 @Composable
 fun AskQuestionField(
-    memberViewModel: MemberViewModel,
+    memberViewModel: MemberViewModelContract,
     list: List<Member>,
     randomName: Member?,
     isRandomNameReceived: Boolean

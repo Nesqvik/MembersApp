@@ -32,8 +32,6 @@ class MemberRepository @Inject constructor(
                 // Wenn Liste leer, gib ein Dummy-Objekt zurück (mit ID -1 und leerem Namen)
                 Member(-1, "", 0)
             }
-
-
         }
 
     override fun fetchMembersData(): List<Member> {

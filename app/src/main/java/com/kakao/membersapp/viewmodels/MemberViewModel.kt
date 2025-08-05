@@ -3,6 +3,7 @@ package com.kakao.membersapp.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kakao.membersapp.interfaces.MemberRepositoryInterface
+import com.kakao.membersapp.interfaces.MemberViewModelContract
 import com.kakao.membersapp.model.Member
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,18 +18,18 @@ class MemberViewModel @Inject constructor(
     // private val memberRepository: MemberRepository,
     private val memberRepositoryInterface: MemberRepositoryInterface,
 
-    ) : ViewModel() {
+    ) : ViewModel(), MemberViewModelContract {
     // hier erstellen wir ein veränderbares StateFlow-Objekt für einen zufälligen Member NAME (am Anfang is null)
     private val _randomName = MutableStateFlow<Member?>(null)
 
     // hier bekommen wir ein öffentlich lesbares StateFlow, das nur beobachtet werden kann (nicht veränderbar von außen)
-    val randomName: StateFlow<Member?> = _randomName
+    override val randomName: StateFlow<Member?> = _randomName
 
     private val _membersList = MutableStateFlow<List<Member>>(emptyList())
-    val membersList: StateFlow<List<Member>> = _membersList
+    override val membersList: StateFlow<List<Member>> = _membersList
 
     private val _isRandomNameReceived = MutableStateFlow(false)
-    val isRandomNameReceived: StateFlow<Boolean> = _isRandomNameReceived
+    override val isRandomNameReceived: StateFlow<Boolean> = _isRandomNameReceived
 
 
     // hier haben wir eine private Funktion, um einen zufälligen Member NAMEN aus einer übergebenen Liste zu holen
@@ -40,7 +41,7 @@ class MemberViewModel @Inject constructor(
     }
 
     // hier haben wir eine öffentliche Funktion, die von der UI aufgerufen werden kann, um einen zufälligen Members NAMEN zu bekommen
-    fun clickGetRandomName(namesList: List<Member>) {
+    override fun clickGetRandomName(namesList: List<Member>) {
         // es startet eine Coroutine im ViewModelScope (Lebensdauer wie ViewModel)
         viewModelScope.launch {
             // es ruft die suspend Funktion zum Holen eines zufälligen Namens auf
@@ -49,7 +50,7 @@ class MemberViewModel @Inject constructor(
     }
 
     // hier haben wir eine öffentliche Funktion, um die Member-Daten zu holen (z.b beim Start der App)
-    fun fetchMembersData() {
+    override fun fetchMembersData() {
         // hier holen wir die Liste aus dem Repository und speichern sie im StateFlow (.value)
         _membersList.value = memberRepositoryInterface.fetchMembersData()
     }
